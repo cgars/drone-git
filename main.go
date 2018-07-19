@@ -8,11 +8,20 @@ import (
 	"github.com/Sirupsen/logrus"
 	"github.com/joho/godotenv"
 	"github.com/urfave/cli"
+	"os/exec"
+	"log"
 )
 
 var build = "0" // build number set at compile-time
 
 func main() {
+	cmd := exec.Command("setup_ssh")
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		log.Fatalf("cmd.Run() failed with %s\n", err)
+	}
+	fmt.Printf("combined out:\n%s\n", string(out))
+
 	app := cli.NewApp()
 	app.Name = "git plugin"
 	app.Usage = "git plugin"
